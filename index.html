@@ -3,615 +3,625 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discover Your Personality Type</title>
+    <title>Course Dashboard</title>
     <style>
-        body {
+        :root {
+            --primary-color: #722f37;
+            --secondary-color: #8b0000;
+            --accent-color: #ffcc00;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #666;
+            --text-color: #333;
+        }
+        
+        * {
             margin: 0;
             padding: 0;
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            color: #333;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+        
+        body {
+            background-color: var(--light-gray);
+            color: var(--text-color);
         }
-        header {
-            text-align: center;
-            padding: 40px 0;
-            animation: fadeIn 1s ease-in-out;
-        }
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            color: #444;
-        }
-        .subtitle {
-            font-size: 1.2em;
-            color: #666;
-            margin-bottom: 30px;
-        }
-        .personal-message {
-            font-style: italic;
-            margin-bottom: 30px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        .quiz-container {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            animation: slideUp 1s ease-in-out;
-        }
-        .question {
-            margin-bottom: 25px;
-            display: none;
-        }
-        .question.active {
-            display: block;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-        .question h3 {
-            margin-bottom: 15px;
-            color: #444;
-        }
-        .options {
+        
+        .header {
+            background-color: white;
+            padding: 10px 20px;
+            border-bottom: 1px solid var(--medium-gray);
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
             gap: 10px;
         }
-        .option {
-            padding: 12px 15px;
-            background: #f7f7f7;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .option:hover {
-            background: #e0e0e0;
-            transform: translateY(-2px);
-        }
-        .option.selected {
-            background: #b8c6db;
-            color: #444;
-            font-weight: bold;
-        }
-        .buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        .btn-prev {
-            background: #f0f0f0;
-            color: #555;
-        }
-        .btn-next, .btn-submit {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        .btn:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-        .progress-container {
-            height: 10px;
-            background: #f0f0f0;
-            border-radius: 5px;
-            margin: 20px 0;
-            overflow: hidden;
-        }
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(to right, #667eea, #764ba2);
-            border-radius: 5px;
-            transition: width 0.5s ease;
-        }
-        .result-container {
-            display: none;
-            animation: fadeIn 1s ease-in-out;
-        }
-        .result-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin-top: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        .personality-type {
-            font-size: 2em;
-            color: #444;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-        .personality-description {
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        .romantic-message {
-            background: rgba(255, 105, 180, 0.1);
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 4px solid #ff69b4;
-            margin-top: 30px;
-            font-style: italic;
-        }
-        .trait-bar {
-            height: 20px;
-            background: #f0f0f0;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            overflow: hidden;
-        }
-        .trait-fill {
-            height: 100%;
-            border-radius: 10px;
-            transition: width 1s ease-in-out;
-        }
-        .trait-label {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        .trait-label span:last-child {
-            color: #666;
-        }
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-        @keyframes slideUp {
-            0% { transform: translateY(50px); opacity: 0; }
-            100% { transform: translateY(0); opacity: 1; }
-        }
-        .hearts {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-        .heart {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23ff69b4" opacity="0.6" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat center center;
-            background-size: contain;
-            animation: float 20s linear infinite;
-            opacity: 0.5;
-        }
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); }
-            100% { transform: translateY(-100vh) rotate(360deg); }
-        }
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 40px;
-        }
-        .loading-circle {
-            display: inline-block;
+        
+        .logo {
             width: 50px;
             height: 50px;
-            border: 5px solid rgba(102, 126, 234, 0.2);
-            border-radius: 50%;
-            border-top-color: #667eea;
-            animation: spin 1s ease-in-out infinite;
+            object-fit: contain;
         }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        
+        .title-container h1 {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .title-container p {
+            font-size: 14px;
+            color: var(--dark-gray);
+        }
+        
+        .user-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .user-actions a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .sign-out {
+            padding: 8px 15px;
+            background-color: white;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        
+        .sidebar {
+            width: 60px;
+            background-color: #333;
+            height: calc(100vh - 70px);
+            position: fixed;
+            top: 70px;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sidebar-icon {
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+        }
+        
+        .sidebar-icon:hover, .sidebar-icon.active {
+            background-color: #444;
+            border-left: 3px solid var(--accent-color);
+        }
+        
+        .main-content {
+            margin-left: 60px;
+            padding: 20px;
+        }
+        
+        .page-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+        
+        .gpa-info {
+            font-size: 14px;
+            margin-bottom: 20px;
+            color: var(--dark-gray);
+        }
+        
+        .gpa-value {
+            font-weight: bold;
+            color: var(--text-color);
+        }
+        
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .course-card {
+            background-image: linear-gradient(to bottom right, var(--secondary-color), var(--primary-color));
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            height: 150px;
+            color: white;
+            position: relative;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .course-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .course-subtitle {
+            font-size: 14px;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .course-details {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .week-container {
+            margin-bottom: 15px;
+        }
+        
+        .week-header {
+            font-weight: bold;
+            padding: 10px;
+            cursor: pointer;
+            background-color: var(--light-gray);
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .week-content {
+            display: none;
+            padding: 15px;
+            border-left: 2px solid var(--medium-gray);
+            margin-left: 10px;
+        }
+        
+        .week-content.active {
+            display: block;
+        }
+        
+        .resource-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: var(--light-gray);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .resource-icon {
+            width: 24px;
+            height: 24px;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .resource-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .resource-link:hover {
+            text-decoration: underline;
+        }
+        
+        .course-nav {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+        
+        .course-nav-btn {
+            padding: 8px 15px;
+            background-color: white;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .course-nav-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .assessment-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .assessment-name {
+            font-size: 14px;
+        }
+        
+        .assessment-score {
+            font-weight: bold;
+        }
+        
+        .quiz-result {
+            background-color: var(--light-gray);
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        
+        .exam-status {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: var(--light-gray);
+            border-radius: 4px;
+        }
+        
+        .status-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .status-value {
+            color: green;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="hearts" id="hearts"></div>
-    <div class="container">
-        <header>
-            <h1>The Personality Connection</h1>
-            <div class="subtitle">Discover how your personality enhances our relationship</div>
-            <div class="personal-message">
-                I created this quiz especially for you, because understanding the depths of your amazing personality helps me appreciate you even more. ❤️
+    <div class="header">
+        <div class="logo-container">
+            <img src="/api/placeholder/50/50" alt="Logo" class="logo">
+            <div class="title-container">
+                <h1>Course Dashboard</h1>
+                <p>Your Learning Portal</p>
             </div>
-        </header>
-
-        <div class="quiz-container" id="quiz">
-            <div class="progress-container">
-                <div class="progress-bar" id="progress"></div>
-            </div>
-            
-            <div class="question active" data-question="1">
-                <h3>1. When faced with a difficult decision, you typically:</h3>
-                <div class="options">
-                    <div class="option" data-trait="logical" data-value="2">Think through all the pros and cons carefully</div>
-                    <div class="option" data-trait="emotional" data-value="2">Trust your gut feeling and emotional response</div>
-                    <div class="option" data-trait="balanced" data-value="2">Consider both logical facts and emotional impact</div>
+        </div>
+        <div class="user-actions">
+            <a href="#">
+                <span>JOHN DOE</span>
+                <span>👤</span>
+            </a>
+            <a href="#">
+                <span>Latest Updates</span>
+                <span>🔔</span>
+            </a>
+            <button class="sign-out">SIGN OUT</button>
+        </div>
+    </div>
+    
+    <div class="sidebar">
+        <div class="sidebar-icon active">📚</div>
+        <div class="sidebar-icon">📊</div>
+        <div class="sidebar-icon">📝</div>
+        <div class="sidebar-icon">📅</div>
+        <div class="sidebar-icon">👥</div>
+        <div class="sidebar-icon">📁</div>
+        <div class="sidebar-icon">⚙️</div>
+    </div>
+    
+    <div class="main-content">
+        <h1 class="page-title">My Current Courses</h1>
+        <p class="gpa-info">Cumulative Grade Point Average (CGPA) till this term - <span class="gpa-value">3.8</span></p>
+        
+        <div class="course-grid">
+            <div class="course-card">
+                <div>
+                    <h3 class="course-title">Python Programming</h3>
+                    <p class="course-subtitle">CORE COURSE</p>
                 </div>
             </div>
             
-            <div class="question" data-question="2">
-                <h3>2. In social situations, you usually:</h3>
-                <div class="options">
-                    <div class="option" data-trait="extroverted" data-value="2">Enjoy being the center of attention</div>
-                    <div class="option" data-trait="introverted" data-value="2">Prefer one-on-one conversations or small groups</div>
-                    <div class="option" data-trait="adaptable" data-value="2">Adjust your behavior depending on the situation</div>
+            <div class="course-card">
+                <div>
+                    <h3 class="course-title">Data Structures</h3>
+                    <p class="course-subtitle">CORE COURSE</p>
                 </div>
             </div>
             
-            <div class="question" data-question="3">
-                <h3>3. When planning a vacation, you prefer to:</h3>
-                <div class="options">
-                    <div class="option" data-trait="structured" data-value="2">Have a detailed itinerary planned in advance</div>
-                    <div class="option" data-trait="spontaneous" data-value="2">Go with the flow and decide activities as you go</div>
-                    <div class="option" data-trait="balanced" data-value="2">Have a loose plan with room for spontaneity</div>
+            <div class="course-card">
+                <div>
+                    <h3 class="course-title">Web Development</h3>
+                    <p class="course-subtitle">ELECTIVE</p>
                 </div>
             </div>
             
-            <div class="question" data-question="4">
-                <h3>4. When someone is telling you about their problems, you typically:</h3>
-                <div class="options">
-                    <div class="option" data-trait="logical" data-value="2">Offer solutions and practical advice</div>
-                    <div class="option" data-trait="emotional" data-value="2">Focus on validating their feelings and showing empathy</div>
-                    <div class="option" data-trait="balanced" data-value="2">Listen carefully and respond with what seems most helpful</div>
+            <div class="course-card">
+                <div>
+                    <h3 class="course-title">Machine Learning</h3>
+                    <p class="course-subtitle">ADVANCED ELECTIVE</p>
                 </div>
-            </div>
-            
-            <div class="question" data-question="5">
-                <h3>5. Your ideal weekend would involve:</h3>
-                <div class="options">
-                    <div class="option" data-trait="extroverted" data-value="2">Socializing with many friends and attending events</div>
-                    <div class="option" data-trait="introverted" data-value="2">Quiet activities like reading, movies, or time with close friends</div>
-                    <div class="option" data-trait="adaptable" data-value="2">A mix of social activities and relaxation time</div>
-                </div>
-            </div>
-            
-            <div class="question" data-question="6">
-                <h3>6. When learning something new, you prefer:</h3>
-                <div class="options">
-                    <div class="option" data-trait="structured" data-value="2">Following a structured course or clear instructions</div>
-                    <div class="option" data-trait="spontaneous" data-value="2">Experimenting and learning through trial and error</div>
-                    <div class="option" data-trait="balanced" data-value="2">A combination of guidance and hands-on experimentation</div>
-                </div>
-            </div>
-            
-            <div class="question" data-question="7">
-                <h3>7. When you're in a relationship, you value:</h3>
-                <div class="options">
-                    <div class="option" data-trait="emotional" data-value="2">Deep emotional connection and shared feelings</div>
-                    <div class="option" data-trait="logical" data-value="2">Intellectual compatibility and shared goals</div>
-                    <div class="option" data-trait="balanced" data-value="2">A balance of emotional intimacy and practical compatibility</div>
-                </div>
-            </div>
-            
-            <div class="question" data-question="8">
-                <h3>8. When it comes to personal growth, you tend to:</h3>
-                <div class="options">
-                    <div class="option" data-trait="structured" data-value="2">Set specific goals and work systematically toward them</div>
-                    <div class="option" data-trait="spontaneous" data-value="2">Embrace opportunities as they arise and go with your passions</div>
-                    <div class="option" data-trait="balanced" data-value="2">Have general directions while remaining open to new possibilities</div>
-                </div>
-            </div>
-            
-            <div class="question" data-question="9">
-                <h3>9. When sharing your feelings, you usually:</h3>
-                <div class="options">
-                    <div class="option" data-trait="extroverted" data-value="2">Express them openly and directly</div>
-                    <div class="option" data-trait="introverted" data-value="2">Process them internally before sharing with select people</div>
-                    <div class="option" data-trait="adaptable" data-value="2">Share differently depending on the situation and person</div>
-                </div>
-            </div>
-            
-            <div class="question" data-question="10">
-                <h3>10. When facing a challenge, you're most likely to:</h3>
-                <div class="options">
-                    <div class="option" data-trait="logical" data-value="2">Analyze the problem methodically to find the best solution</div>
-                    <div class="option" data-trait="emotional" data-value="2">Consider how different approaches would make you feel</div>
-                    <div class="option" data-trait="balanced" data-value="2">Weigh both practical solutions and emotional impacts</div>
-                </div>
-            </div>
-            
-            <div class="buttons">
-                <button class="btn btn-prev" id="prev" disabled>Previous</button>
-                <button class="btn btn-next" id="next">Next</button>
-                <button class="btn btn-submit" id="submit" style="display: none;">See Results</button>
             </div>
         </div>
         
-        <div class="loading" id="loading">
-            <div class="loading-circle"></div>
-            <p>Analyzing your personality...</p>
+        <!-- Python Programming Course Details -->
+        <div class="course-details">
+            <h2 class="course-title">Python Programming</h2>
+            
+            <div class="week-container">
+                <div class="week-header" onclick="toggleWeek(this)">
+                    <span>Week 1: Introduction to Python</span>
+                    <span>▼</span>
+                </div>
+                <div class="week-content">
+                    <div class="resource-item">
+                        <div class="resource-icon">📹</div>
+                        <a href="#" class="resource-link">Video: Introduction to Python Basics</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon">📹</div>
+                        <a href="#" class="resource-link">Video: Setting up Python Environment</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon">📄</div>
+                        <a href="#" class="resource-link">PDF: Week 1 Study Materials</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon">🔗</div>
+                        <a href="#" class="resource-link">External: Python.org Documentation</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon">📝</div>
+                        <a href="#" class="resource-link">Assignment: Hello World Program</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="week-container">
+                <div class="week-header" onclick="toggleWeek(this)">
+                    <span>Week 2: Data Types and Variables</span>
+                    <span>▼</span>
+                </div>
+                <div class="week-content">
+                    <div class="resource-item">
+                        <div class="resource-icon">📹</div>
+                        <a href="#" class="resource-link">Video: Understanding Python Data Types</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon">📹</div>
+                        <a href="#" class="resource-link">Video: Working with Variables</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon">📄</div>
+                        <a href="#" class="resource-link">PDF: Week 2 Study Materials</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon">🔗</div>
+                        <a href="#" class="resource-link">External: W3Schools Python Variables</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon">📝</div>
+                        <a href="#" class="resource-link">Assignment: Calculate Area of Shapes</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="week-container">
+                <div class="week-header" onclick="toggleWeek(this)">
+                    <span>Week 3: Control Flow</span>
+                    <span>▼</span>
+                </div>
+                <div class="week-content">
+                    <div class="resource-item">
+                        <div class="resource-icon">📹</div>
+                        <a href="#" class="resource-link">Video: Conditionals (if, else, elif)</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon">📹</div>
+                        <a href="#" class="resource-link">Video: Loops in Python</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon">📄</div>
+                        <a href="#" class="resource-link">PDF: Week 3 Study Guide</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon">🔗</div>
+                        <a href="#" class="resource-link">External: Real Python Control Flow Tutorial</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon">📝</div>
+                        <a href="#" class="resource-link">Assignment: Build a Simple Calculator</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="assessment-section">
+                <h3>Assessments</h3>
+                <div class="assessment-item">
+                    <span class="assessment-name">Week 1 Assignment</span>
+                    <span class="assessment-score">15/20</span>
+                </div>
+                <div class="assessment-item">
+                    <span class="assessment-name">Week 2 Assignment</span>
+                    <span class="assessment-score">18/20</span>
+                </div>
+                <div class="assessment-item">
+                    <span class="assessment-name">Week 3 Assignment</span>
+                    <span class="assessment-score">19/20</span>
+                </div>
+                
+                <div class="quiz-result">
+                    <div class="assessment-item">
+                        <span class="assessment-name">Quiz 1</span>
+                        <span class="assessment-score">42/50</span>
+                    </div>
+                </div>
+                
+                <div class="exam-status">
+                    <div class="status-label">Allowed to take End Term Exam?</div>
+                    <div class="status-value">Yes</div>
+                </div>
+            </div>
+            
+            <div class="course-nav">
+                <a href="#" class="course-nav-btn">Go to Course page ></a>
+            </div>
         </div>
         
-        <div class="result-container" id="result">
-            <div class="result-card">
-                <h2 class="personality-type" id="personalityType">Your Personality Type</h2>
+        <!-- Data Structures Course Details -->
+        <div class="course-details">
+            <h2 class="course-title">Data Structures</h2>
+            
+            <div class="week-container">
+                <div class="week-header" onclick="toggleWeek(this)">
+                    <span>Week 1: Introduction to Data Structures</span>
+                    <span>▼</span>
+                </div>
+                <div class="week-content">
+                    <div class="resource-item">
+                        <div class="resource-icon">📹</div>
+                        <a href="#" class="resource-link">Video: What are Data Structures?</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon">📹</div>
+                        <a href="#" class="resource-link">Video: Arrays and Lists</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon">📄</div>
+                        <a href="#" class="resource-link">PDF: Data Structures Overview</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon">🔗</div>
+                        <a href="#" class="resource-link">External: GeeksforGeeks Data Structures</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon">📝</div>
+                        <a href="#" class="resource-link">Assignment: Array Operations</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="week-container">
+                <div class="week-header" onclick="toggleWeek(this)">
+                    <span>Week 2: Linked Lists</span>
+                    <span>▼</span>
+                </div>
+                <div class="week-content">
+                    <div class="resource-item">
+                        <div class="resource-icon">📹</div>
+                        <a href="#" class="resource-link">Video: Singly Linked Lists</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon">📹</div>
+                        <a href="#" class="resource-link">Video: Doubly Linked Lists</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon">📄</div>
+                        <a href="#" class="resource-link">PDF: Linked List Operations</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon">🔗</div>
+                        <a href="#" class="resource-link">External: Visualizing Linked Lists</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon">📝</div>
+                        <a href="#" class="resource-link">Assignment: Implement a Linked List</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="week-container">
+                <div class="week-header" onclick="toggleWeek(this)">
+                    <span>Week 3: Stacks and Queues</span>
+                    <span>▼</span>
+                </div>
+                <div class="week-content">
+                    <div class="resource-item">
+                        <div class="resource-icon">📹</div>
+                        <a href="#" class="resource-link">Video: Stack Data Structure</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon">📹</div>
+                        <a href="#" class="resource-link">Video: Queue Data Structure</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon">📄</div>
+                        <a href="#" class="resource-link">PDF: Stack and Queue Applications</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon">🔗</div>
+                        <a href="#" class="resource-link">External: Stack Overflow Developer Survey</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-icon">📝</div>
+                        <a href="#" class="resource-link">Assignment: Implement Stack and Queue</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="assessment-section">
+                <h3>Assessments</h3>
+                <div class="assessment-item">
+                    <span class="assessment-name">Week 1 Assignment</span>
+                    <span class="assessment-score">27/30</span>
+                </div>
+                <div class="assessment-item">
+                    <span class="assessment-name">Week 2 Assignment</span>
+                    <span class="assessment-score">25/30</span>
+                </div>
+                <div class="assessment-item">
+                    <span class="assessment-name">Week 3 Assignment</span>
+                    <span class="assessment-score">28/30</span>
+                </div>
                 
-                <div class="trait-results">
-                    <div class="trait-set">
-                        <div class="trait-label">
-                            <span>Mind: Extroverted vs. Introverted</span>
-                            <span id="mindScore">0%</span>
-                        </div>
-                        <div class="trait-bar">
-                            <div class="trait-fill" id="mindBar" style="width: 0%; background: linear-gradient(to right, #3498db, #9b59b6);"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="trait-set">
-                        <div class="trait-label">
-                            <span>Decision Making: Logical vs. Emotional</span>
-                            <span id="decisionScore">0%</span>
-                        </div>
-                        <div class="trait-bar">
-                            <div class="trait-fill" id="decisionBar" style="width: 0%; background: linear-gradient(to right, #2ecc71, #f1c40f);"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="trait-set">
-                        <div class="trait-label">
-                            <span>Lifestyle: Structured vs. Spontaneous</span>
-                            <span id="lifestyleScore">0%</span>
-                        </div>
-                        <div class="trait-bar">
-                            <div class="trait-fill" id="lifestyleBar" style="width: 0%; background: linear-gradient(to right, #e74c3c, #f39c12);"></div>
-                        </div>
+                <div class="quiz-result">
+                    <div class="assessment-item">
+                        <span class="assessment-name">Quiz 1</span>
+                        <span class="assessment-score">43/50</span>
                     </div>
                 </div>
                 
-                <div class="personality-description" id="personalityDescription">
-                    Your personality description will appear here.
+                <div class="exam-status">
+                    <div class="status-label">Allowed to take End Term Exam?</div>
+                    <div class="status-value">Yes</div>
                 </div>
-                
-                <div class="romantic-message" id="romanticMessage">
-                    A special message just for you will appear here.
-                </div>
+            </div>
+            
+            <div class="course-nav">
+                <a href="#" class="course-nav-btn">Go to Course page ></a>
             </div>
         </div>
     </div>
     
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Create floating hearts
-            createHearts();
+        function toggleWeek(element) {
+            const content = element.nextElementSibling;
+            content.classList.toggle('active');
             
-            // Quiz variables
-            let currentQuestion = 1;
-            const totalQuestions = document.querySelectorAll('.question').length;
-            const traits = {
-                logical: 0,
-                emotional: 0,
-                extroverted: 0,
-                introverted: 0,
-                structured: 0,
-                spontaneous: 0,
-                balanced: 0,
-                adaptable: 0
-            };
-            
-            // DOM elements
-            const prevButton = document.getElementById('prev');
-            const nextButton = document.getElementById('next');
-            const submitButton = document.getElementById('submit');
-            const progressBar = document.getElementById('progress');
-            
-            // Update progress bar
-            function updateProgress() {
-                const progress = (currentQuestion / totalQuestions) * 100;
-                progressBar.style.width = `${progress}%`;
+            // Update the arrow
+            const arrow = element.querySelector('span:last-child');
+            if (content.classList.contains('active')) {
+                arrow.textContent = '▲';
+            } else {
+                arrow.textContent = '▼';
             }
-            
-            // Show question
-            function showQuestion(questionNumber) {
-                // Hide all questions
-                document.querySelectorAll('.question').forEach(question => {
-                    question.classList.remove('active');
-                });
-                
-                // Show current question
-                document.querySelector(`.question[data-question="${questionNumber}"]`).classList.add('active');
-                
-                // Update buttons
-                prevButton.disabled = questionNumber === 1;
-                nextButton.style.display = questionNumber === totalQuestions ? 'none' : 'block';
-                submitButton.style.display = questionNumber === totalQuestions ? 'block' : 'none';
-                
-                // Update progress
-                updateProgress();
-            }
-            
-            // Next question
-            nextButton.addEventListener('click', function() {
-                const currentQuestionElement = document.querySelector(`.question[data-question="${currentQuestion}"]`);
-                const selectedOption = currentQuestionElement.querySelector('.option.selected');
-                
-                if (selectedOption) {
-                    currentQuestion++;
-                    showQuestion(currentQuestion);
-                } else {
-                    alert('Please select an option to continue.');
-                }
-            });
-            
-            // Previous question
-            prevButton.addEventListener('click', function() {
-                if (currentQuestion > 1) {
-                    currentQuestion--;
-                    showQuestion(currentQuestion);
-                }
-            });
-            
-            // Option selection
-            document.querySelectorAll('.option').forEach(option => {
-                option.addEventListener('click', function() {
-                    // Remove selected class from all options in the same question
-                    const questionElement = this.closest('.question');
-                    questionElement.querySelectorAll('.option').forEach(opt => {
-                        opt.classList.remove('selected');
-                    });
-                    
-                    // Add selected class to clicked option
-                    this.classList.add('selected');
-                });
-            });
-            
-            // Submit quiz
-            submitButton.addEventListener('click', function() {
-                const lastQuestionElement = document.querySelector(`.question[data-question="${totalQuestions}"]`);
-                const selectedOption = lastQuestionElement.querySelector('.option.selected');
-                
-                if (selectedOption) {
-                    calculateResults();
-                } else {
-                    alert('Please select an option to see your results.');
-                }
-            });
-            
-            // Calculate results
-            function calculateResults() {
-                // Collect all selected options
-                document.querySelectorAll('.option.selected').forEach(option => {
-                    const trait = option.getAttribute('data-trait');
-                    const value = parseInt(option.getAttribute('data-value'));
-                    traits[trait] += value;
-                });
-                
-                // Show loading
-                document.getElementById('quiz').style.display = 'none';
-                document.getElementById('loading').style.display = 'block';
-                
-                // Simulate processing time
-                setTimeout(() => {
-                    // Hide loading
-                    document.getElementById('loading').style.display = 'none';
-                    
-                    // Show results
-                    displayResults();
-                    document.getElementById('result').style.display = 'block';
-                    
-                    // Animate trait bars
-                    setTimeout(() => {
-                        const mindTotal = traits.extroverted + traits.introverted + traits.adaptable;
-                        const decisionTotal = traits.logical + traits.emotional + traits.balanced;
-                        const lifestyleTotal = traits.structured + traits.spontaneous + traits.balanced;
-                        
-                        const mindScore = Math.round((traits.extroverted / mindTotal) * 100);
-                        const decisionScore = Math.round((traits.logical / decisionTotal) * 100);
-                        const lifestyleScore = Math.round((traits.structured / lifestyleTotal) * 100);
-                        
-                        document.getElementById('mindScore').textContent = `${mindScore}% Extroverted`;
-                        document.getElementById('decisionScore').textContent = `${decisionScore}% Logical`;
-                        document.getElementById('lifestyleScore').textContent = `${lifestyleScore}% Structured`;
-                        
-                        document.getElementById('mindBar').style.width = `${mindScore}%`;
-                        document.getElementById('decisionBar').style.width = `${decisionScore}%`;
-                        document.getElementById('lifestyleBar').style.width = `${lifestyleScore}%`;
-                    }, 500);
-                }, 2000);
-            }
-            
-            // Display results
-            function displayResults() {
-                // Calculate dominant traits
-                const mind = traits.extroverted > traits.introverted ? 'Extroverted' : 'Introverted';
-                const decision = traits.logical > traits.emotional ? 'Logical' : 'Emotional';
-                const lifestyle = traits.structured > traits.spontaneous ? 'Structured' : 'Spontaneous';
-                
-                // Generate personality type
-                const personalityType = `${mind} ${decision} ${lifestyle}`;
-                document.getElementById('personalityType').textContent = personalityType;
-                
-                // Generate description
-                let description = '';
-                if (mind === 'Extroverted') {
-                    description += 'You draw energy from social interactions and enjoy being around others. You're expressive, outgoing, and comfortable in group settings. ';
-                } else {
-                    description += 'You gain energy from quiet reflection and enjoy meaningful one-on-one conversations. You're thoughtful, observant, and value deep connections. ';
-                }
-                
-                if (decision === 'Logical') {
-                    description += 'When making decisions, you prioritize facts, principles, and objective analysis. You're analytical, fair-minded, and value clarity and consistency. ';
-                } else {
-                    description += 'When making decisions, you consider values, emotions, and the impact on people. You're empathetic, compassionate, and guided by your personal principles. ';
-                }
-                
-                if (lifestyle === 'Structured') {
-                    description += 'You prefer organization, planning, and having things settled. You're reliable, methodical, and appreciate clear expectations and routines.';
-                } else {
-                    description += 'You prefer flexibility, adaptability, and keeping options open. You're creative, spontaneous, and enjoy exploring new possibilities as they arise.';
-                }
-                
-                document.getElementById('personalityDescription').textContent = description;
-                
-                // Generate romantic message
-                let romanticMessage = '';
-                if (mind === 'Extroverted' && decision === 'Emotional' && lifestyle === 'Spontaneous') {
-                    romanticMessage = "Your vibrant personality brings so much joy and excitement to our relationship. I love how you express your feelings openly and are always ready for new adventures together. Your spontaneity keeps our love fresh and exciting!";
-                } else if (mind === 'Extroverted' && decision === 'Emotional' && lifestyle === 'Structured') {
-                    romanticMessage = "I adore how you combine your warm outgoing nature with thoughtful planning. You create the perfect balance of exciting experiences and meaningful moments for us. Your emotional depth and organizational skills make me feel both cherished and secure.";
-                } else if (mind === 'Extroverted' && decision === 'Logical' && lifestyle === 'Spontaneous') {
-                    romanticMessage = "Your quick thinking and social energy create such a dynamic presence in my life. I love how you can analyze a situation clearly while still being open to adventure. You've taught me to approach life with both wisdom and excitement.";
-                } else if (mind === 'Extroverted' && decision === 'Logical' && lifestyle === 'Structured') {
-                    romanticMessage = "I'm amazed by how you can be both the life of the party and the voice of reason. Your ability to organize and lead while keeping everyone engaged is truly special. You bring both stability and excitement to our relationship.";
-                } else if (mind === 'Introverted' && decision === 'Emotional' && lifestyle === 'Spontaneous') {
-                    romanticMessage = "I treasure the depth of your emotional world and your quiet spontaneity. There's nothing more beautiful than when you share your inner thoughts and feelings with me. Your genuine and unpredictable nature makes every moment we spend together precious.";
-                } else if (mind === 'Introverted' && decision === 'Emotional' && lifestyle === 'Structured') {
-                    romanticMessage = "Your thoughtful care and attention to detail show me how deeply you love. I admire how you create space for meaningful connection while maintaining harmony and order. Your emotional intelligence and reliability make me feel completely loved and secure.";
-                } else if (mind === 'Introverted' && decision === 'Logical' && lifestyle === 'Spontaneous') {
-                    romanticMessage = "I'm fascinated by your analytical mind and your quiet creativity. You see the world in such a unique way, and I love how you can surprise me with both insightful observations and unexpected ideas. You've taught me to appreciate both thinking deeply and embracing the moment.";
-                } else if (mind === 'Introverted' && decision === 'Logical' && lifestyle === 'Structured') {
-                    romanticMessage = "Your thoughtful precision and quiet strength create such a solid foundation for our relationship. I admire how you think things through carefully and create systems that help us both thrive. Your dependability and intelligence make me feel both secure and inspired.";
-                }
-                
-                document.getElementById('romanticMessage').innerHTML = romanticMessage + "<br><br>Every day with you is a gift, and understanding your personality helps me appreciate you even more. Thank you for being exactly who you are - you're perfect for me. ❤️";
-            }
-            
-            // Create floating hearts
-            function createHearts() {
-                const heartsContainer = document.getElementById('hearts');
-                const numHearts = 15;
-                
-                for (let i = 0; i < numHearts; i++) {
-                    const heart = document.createElement('div');
-                    heart.classList.add('heart');
-                    
-                    // Random position and size
-                    heart.style.left = `${Math.random() * 100}%`;
-                    heart.style.opacity = `${Math.random() * 0.5 + 0.3}`;
-                    
-                    const size = Math.random() * 20 + 10;
-                    heart.style.width = `${size}px`;
-                    heart.style.height = `${size}px`;
-                    
-                    // Random animation duration and delay
-                    const duration = Math.random() * 10 + 10;
-                    const delay = Math.random() * 10;
-                    heart.style.animation = `float ${duration}s linear infinite ${delay}s`;
-                    
-                    heartsContainer.appendChild(heart);
-                }
-            }
-            
-            // Initialize quiz
-            updateProgress();
-        });
+        }
     </script>
 </body>
 </html>
