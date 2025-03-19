@@ -1,15 +1,197 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My GitHub Site</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Someone Special</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
-        h1 { color: #333; }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        h1 {
+            font-size: 3em;
+            color: #333;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: fadeIn 2s ease-in-out;
+        }
+        p {
+            font-size: 1.5em;
+            color: #555;
+            max-width: 600px;
+            line-height: 1.6;
+            margin: 0 auto 30px;
+            animation: slideUp 1.5s ease-in-out;
+        }
+        .heart {
+            display: inline-block;
+            font-size: 2em;
+            color: #ff4b4b;
+            animation: heartbeat 1.5s infinite;
+        }
+        .message {
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            animation: fadeIn 3s ease-in-out;
+        }
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .heart-particle {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23ff4b4b" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat center center;
+            background-size: contain;
+            animation: float 3s infinite;
+            opacity: 0.7;
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes slideUp {
+            0% { transform: translateY(50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            50% { opacity: 0.7; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(255, 117, 140, 0.4);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 117, 140, 0.6);
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
     </style>
 </head>
 <body>
-    <h1>Welcome to My GitHub Page!</h1>
-    <p>This site is hosted using GitHub Pages.</p>
+    <div class="hearts" id="hearts"></div>
+    <div class="container">
+        <div class="message">
+            <h1>Hey Beautiful! <span class="heart">❤️</span></h1>
+            <p>Just wanted to let you know that you make my world brighter and more beautiful every single day.</p>
+            <p>You're the CSS to my HTML - without you, I'd be just plain text.</p>
+            <p>I built this page just for you, because you deserve something special.</p>
+            <a href="#" class="btn" id="specialBtn">Click For A Surprise</a>
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            const screenWidth = window.innerWidth;
+            
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart-particle');
+                
+                // Random positioning
+                heart.style.left = Math.random() * screenWidth + 'px';
+                heart.style.top = Math.random() * 100 + 100 + '%';
+                
+                // Random size
+                const size = Math.random() * 20 + 10;
+                heart.style.width = size + 'px';
+                heart.style.height = size + 'px';
+                
+                // Random animation duration
+                heart.style.animationDuration = Math.random() * 3 + 3 + 's';
+                
+                heartsContainer.appendChild(heart);
+                
+                // Remove heart after animation
+                setTimeout(() => {
+                    heart.remove();
+                }, 6000);
+            }
+        }
+        
+        // Initial hearts
+        createHearts();
+        
+        // Create new hearts every 2 seconds
+        setInterval(createHearts, 2000);
+        
+        // Add special button effect
+        document.getElementById('specialBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Extra hearts burst
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.classList.add('heart-particle');
+                    
+                    // Position around the button
+                    const rect = this.getBoundingClientRect();
+                    heart.style.left = (rect.left + rect.width/2 - 7.5 + (Math.random() * 100 - 50)) + 'px';
+                    heart.style.top = (rect.top + rect.height/2 - 7.5 + (Math.random() * 100 - 50)) + 'px';
+                    
+                    // Random size
+                    const size = Math.random() * 15 + 5;
+                    heart.style.width = size + 'px';
+                    heart.style.height = size + 'px';
+                    
+                    // Faster animation
+                    heart.style.animationDuration = Math.random() * 2 + 1 + 's';
+                    
+                    document.getElementById('hearts').appendChild(heart);
+                    
+                    // Remove heart after animation
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 3000);
+                }, i * 20);
+            }
+            
+            // Change button text
+            this.textContent = 'I Love You! ❤️';
+        });
+    </script>
 </body>
 </html>
-
