@@ -3,32 +3,33 @@
 **For whoever tutors the next session, whichever model it is:**
 - Read `CURRICULUM.md` §1–5 before each session.
 - Start every session with the recall test of the previous boxed result.
-- Keep the running example, the datasets and the notation fixed.
+- Keep the running world, the datasets (§5) and the notation fixed.
 - Maths is just in time, via Math Boxes (§3). Never teach maths ahead of the lesson that needs it.
+- Each Part's Investigation: get the learner's written prediction *before* working it out, and log it below.
 - Update this file at the end of every session.
 
 ## Current position
 
-**Lesson 1.1, not started.** Curriculum v2 is final. D4 is still open but doesn't block starting.
+**Lesson 1.1, not started.** Curriculum v3 is final. D4 is still open but doesn't block starting.
 
 ## Learner profile
 
 - **Goal:** researcher-level intuition; aiming to work at a frontier AI lab. Transformers in depth are a primary goal.
 - **Constraints:**
   - no code written; pen and paper only;
-  - maths just in time;
+  - maths just in time; "implement" = apply by hand;
   - easy numbers;
   - plain-English and implementation meaning for every symbol;
-  - one running example throughout;
+  - one running world throughout;
   - no flattery;
   - no rabbit holes.
-- **Maths background:** unknown. Assess with each Math Box's one-problem check; record the results here.
+- **Maths background:** unknown. Assess with each Math Box's one-problem check; record the results below.
 
 ## Decisions
 
 | ID | Question | Status | Choice |
 |---|---|---|---|
-| D1 | Running world | adopted (no objection raised) | toy self-driving car |
+| D1 | Running world | adopted (no objection raised) | toy self-driving car, all datasets linked (§5) |
 | D2 | Transformers | **decided by the learner** | mandatory, research depth → Part 8 |
 | D3 | Part 7: no code at all, or may the learner *read* a few lines? | default | no code at all |
 | D4 | Is the learner reading Weidman's book alongside? | pending | — |
@@ -39,6 +40,20 @@
 | Box | Status | Notes |
 |---|---|---|
 | MB1–MB25 | not started | (fill in as each box fires: skipped-known / taught / shaky) |
+
+## Investigations: prediction vs outcome
+
+| Part | Investigation | Learner's prediction (written first) | Outcome | Lesson learned |
+|---|---|---|---|---|
+| P1 | Straight line at speed 3? | — | — | — |
+| P2 | Minimum hidden units for the interaction? | — | — | — |
+| P3 | Does a second hidden layer help on v0? | — | — | — |
+| P4 | All-zero initialisation? | — | — | — |
+| P5 | Dense vs conv vs conv+pool on the left-column pedestrian? | — | — | — |
+| P6 | Gradient decay vs distance k? | — | — | — |
+| P7 | Does the autoencoder rediscover (h, w)? | — | — | — |
+| P8 | Attention finds the latest light? Induction? | — | — | — |
+| P9 | What does a red-light-only reward produce? | — | — | — |
 
 ## Open Questions log
 
@@ -57,3 +72,4 @@
 |---|---|---|---|---|---|
 | 0 | 2026-10-12 | Planning v1 | — | — | Curriculum drafted; gaps researched |
 | 0b | 2026-10-12 | Planning v2 | — | — | Just-in-time maths; Transformers Part 8 (mandatory); trip-log dataset; RLHF 9.5 |
+| 0c | 2026-10-12 | Planning v3 | — | — | Audit vs criteria: linked world, all datasets fixed, Investigations, spaced recall, forward-then-backprop explicit, pooling made D |
