@@ -27,6 +27,13 @@
 - **Style notes from 1.1–1.2:**
   - The first 1.1 was too dense: a table of 5 symbol cards at once. Introduce notation one piece at a time.
   - The plain-English rewrite then over-corrected into something too basic, which the learner found confusing. Pitch at the level of someone who knows backprop, using compact standard notation.
+- **Teaching style the learner asked for (2026-10-13). Follow it strictly:**
+  1. A story or intuition first, framed as a real prediction problem.
+  2. The geometric picture: the bias shifts the line up or down, the weights tilt it, and the line settles at the best fit.
+  3. Then the maths, in rendered LaTeX ($…$ and $$…$$), never plain-text formulas.
+  4. Then the meaning.
+  - Forward pass: z₁ = W₁x + b₁ → activation → feeds layer 2 → loss. Backprop: chain the sensitivities backward.
+  - Don't open a lesson with bare formulas and exercises.
 
 ## Decisions
 
