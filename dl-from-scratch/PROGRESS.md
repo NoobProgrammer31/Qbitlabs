@@ -10,7 +10,7 @@
 
 ## Current position
 
-**Lesson 1.1, not started.** Curriculum v3 is final. D4 is still open but doesn't block starting.
+**Lesson 1.3 (fast track).** 1.1 and 1.2 are done. Parts 1–3 run as a fast verification pass: one check problem per lesson, and we slow down only where something is new or a check fails.
 
 ## Learner profile
 
@@ -23,7 +23,10 @@
   - one running world throughout;
   - no flattery;
   - no rabbit holes.
-- **Maths background:** unknown. Assess with each Math Box's one-problem check; record the results below.
+- **Maths background:** says they know end-to-end backprop through multiple layers (2026-10-13). Verify this through the check problems, not by assuming it.
+- **Style notes from 1.1–1.2:**
+  - The first 1.1 was too dense: a table of 5 symbol cards at once. Introduce notation one piece at a time.
+  - The plain-English rewrite then over-corrected into something too basic, which the learner found confusing. Pitch at the level of someone who knows backprop, using compact standard notation.
 
 ## Decisions
 
@@ -73,3 +76,4 @@
 | 0 | 2026-10-12 | Planning v1 | — | — | Curriculum drafted; gaps researched |
 | 0b | 2026-10-12 | Planning v2 | — | — | Just-in-time maths; Transformers Part 8 (mandatory); trip-log dataset; RLHF 9.5 |
 | 0c | 2026-10-12 | Planning v3 | — | — | Audit vs criteria: linked world, all datasets fixed, Investigations, spaced recall, forward-then-backprop explicit, pooling made D |
+| 1 | 2026-10-13 | 1.1, 1.2 | supervised learning = learn a rule from (x, y) to guess y for new x; model = family of rules, parameters pick one | — | Key point: identical x with different y ⇒ irreducible error from missing features. Learner skipped the notation drills. Level recalibrated: knows backprop. |
